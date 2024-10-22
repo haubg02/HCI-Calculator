@@ -141,31 +141,55 @@
                                 <h1 style="font-size: 24px;">HAPPINESS CIMLAB INDEX</h1>
                                 <form id="hciForm">
                                     <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="cpa">CPA</label>
-                                            <input type="number" id="cpa" step="0.01" required>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="cpa">CPA</label>
+                                                <input type="number" id="cpa" step="0.01" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="height">Height (m):</label>
+                                                <input type="number" id="height" step="0.01" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="weight">Weight (kg):</label>
+                                                <input type="number" id="weight" step="0.01" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="toeic">TOEIC Score (Hiện tại):</label>
+                                                <input type="number" id="toeic" step="1" required>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="height">Height (m):</label>
-                                            <input type="number" id="height" step="0.01" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="weight">Weight (kg):</label>
-                                            <input type="number" id="weight" step="0.01" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="toeic">TOEIC Score (Điểm hiện tại):</label>
-                                            <input type="number" id="toeic" step="1" required>
+            
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="name">Họ tên:</label>
+                                                <input type="text" id="name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="course">Khóa:</label>
+                                                <input type="text" id="course" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="mssv">MSSV:</label>
+                                                <input type="text" id="mssv" required>
+                                            </div>
+                                            <div>
+                                                <label>Select Industry:</label><br>
+                                                <input type="radio" id="industry1" name="industry" value="Cơ Khí" checked>
+                                                <label for="industry1">Cơ Khí</label><br>
+                                                <input type="radio" id="industry2" name="industry" value="Cơ Điện Tử">
+                                                <label for="industry2">Cơ Điện Tử</label><br>
+                                            </div>
                                         </div>
                                     </div>
-
+            
                                     <label>
                                         <input type="checkbox" id="competition"> Đã hoặc Đang tham gia Sáng Tạo Trẻ, TechStart, NCKH ...
                                     </label><br><br>
-
+            
                                     <button type="button" onclick="calculateHCI()">Calculate HCI</button>
                                 </form>
-
+            
                                 <h2>HCI Result: <span id="result"></span></h2>
                                 <div class="message-box" id="adviceBox">
                                     <span id="advice"></span>
@@ -175,6 +199,7 @@
                     </div>
                 </div>
             </div>
+            
 
             <div id="joystick-container" style="position: relative; width: 100%; height: 300px;"></div>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.1.0/nouislider.min.js"></script>
@@ -208,12 +233,14 @@
                     // Tính HCI với các tham số mới
                     var HCI = (CPA / 3.2) * coefficient + (H / 1.7) * 0.1 + (idealWeight - 5 * deltaW) / idealWeight * 0.1 + e + f;
 
+                    var rawHCI = HCI;
+
                     var roundedHCI = Math.round(HCI * 100) / 100;
 
                     document.getElementById('result').textContent = roundedHCI.toFixed(2);
 
                     var advice;
-                    if (HCI >= 0.90) {
+                    if (rawHCI >= 0.90) {
                         advice = "Chúc mừng bạn đã đạt yêu cầu chỉ số phát triển nguồn lực CIMLAB.";
                     } else {
                         advice = "Chúc bạn may mắn lần sau.";
