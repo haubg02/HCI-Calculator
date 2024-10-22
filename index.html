@@ -131,10 +131,18 @@
                                     <label for="weight">Weight (kg):</label>
                                     <input type="number" id="weight" step="0.01" required><br><br>
 
+                                    <label for="toeic">TOEIC Score:</label>
+                                    <input type="number" id="toeic" step="1" required><br><br>
+
+                                    <label>
+                                        <input type="checkbox" id="competition"> I participated in an innovation contest (Techstart, SangTaoTre...)
+                                    </label><br><br>
+
                                     <button type="button" onclick="calculateHCI()">Calculate HCI</button>
                                 </form>
 
                                 <h2>HCI Result: <span id="result"></span></h2>
+                                <h2><span id="advice"></span></h2>
 
 
                             </div>
@@ -151,23 +159,40 @@
                     var CPA = parseFloat(document.getElementById('cpa').value);
                     var H = parseFloat(document.getElementById('height').value);
                     var W = parseFloat(document.getElementById('weight').value);
+                    var TOEIC = parseFloat(document.getElementById('toeic').value);
+                    var competition = document.getElementById('competition').checked;
 
-                    // Điều chỉnh hệ số cho CPA dựa trên chiều cao
                     var coefficient;
                     if (H >= 1.7) {
-                        coefficient = 0.7;
-                    } else if (H >= 1.65 && H < 1.7) {
-                        coefficient = 0.67;
-                    } else {
                         coefficient = 0.65;
+                    } else if (H >= 1.65 && H < 1.7) {
+                        coefficient = 0.63;
+                    } else {
+                        coefficient = 0.6;
                     }
 
-                    var deltaW = Math.abs(W - (H - 1) * 90 - 3);
+                    var idealWeight = (H - 1) * 90 + 3;
+                    var deltaW = Math.abs(W - idealWeight);
 
-                    // Công thức tính HCI với hệ số mới
-                    var HCI = (CPA / 3.2) * coefficient + (H / 1.7) * 0.2 + ((H - 1) * 90 + 3 - 5 * deltaW) / ((H - 1) * 90 + 3) * 0.1;
+                    // Tính điểm hệ số TOEIC
+                    var e = (TOEIC / 750) * 0.1;
+
+                    // Tính điểm sáng tạo
+                    var f = competition ? 1 * 0.05 : 0; 
+
+                    // Tính HCI với các tham số mới
+                    var HCI = (CPA / 3.2) * coefficient + (H / 1.7) * 0.1 + (idealWeight - 5 * deltaW) / idealWeight * 0.1 + e + f;
 
                     document.getElementById('result').textContent = HCI.toFixed(2);
+
+                    var advice;
+                    if (HCI >= 0.9) {
+                        advice = "Chúc mừng bạn đã đạt yêu cầu chỉ số phát triển nguồn lực COMLAB.";
+                    } else {
+                        advice = "Chúc bạn may mắn lần sau.";
+                    }
+
+                    document.getElementById('advice').textContent = advice;
                 }
             </script>
 
