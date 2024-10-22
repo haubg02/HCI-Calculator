@@ -151,11 +151,22 @@
                     var CPA = parseFloat(document.getElementById('cpa').value);
                     var H = parseFloat(document.getElementById('height').value);
                     var W = parseFloat(document.getElementById('weight').value);
-        
+
+                    // Điều chỉnh hệ số cho CPA dựa trên chiều cao
+                    var coefficient;
+                    if (H >= 1.7) {
+                        coefficient = 0.7;
+                    } else if (H >= 1.65 && H < 1.7) {
+                        coefficient = 0.67;
+                    } else {
+                        coefficient = 0.65;
+                    }
+
                     var deltaW = Math.abs(W - (H - 1) * 90 - 3);
-        
-                    var HCI = (CPA / 3.2) * 0.7 + (H / 1.7) * 0.2 + ((H - 1) * 90 + 3 - 5 * deltaW) / ((H - 1) * 90 + 3) * 0.1;
-        
+
+                    // Công thức tính HCI với hệ số mới
+                    var HCI = (CPA / 3.2) * coefficient + (H / 1.7) * 0.2 + ((H - 1) * 90 + 3 - 5 * deltaW) / ((H - 1) * 90 + 3) * 0.1;
+
                     document.getElementById('result').textContent = HCI.toFixed(2);
                 }
             </script>
