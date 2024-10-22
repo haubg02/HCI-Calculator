@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>HCI Calculator</title>
+    <title>HAPPENESS CIMLAB INDEX</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="A onepage portfolio HTML template by Unslate.co">
@@ -64,6 +64,25 @@
             color: #333; /* Màu chữ */
             width: 80%; /* Chiều rộng của khung */
             margin: 20px auto; /* Căn giữa khung */
+            display: none; /* Ẩn khung thông báo mặc định */
+        }
+
+        /* Flexbox cho các trường nhập liệu */
+        .form-row {
+            display: flex;
+            justify-content: space-between; /* Căn giữa các trường nhập liệu */
+            flex-wrap: wrap; /* Cho phép các mục nhập xuống dòng nếu cần */
+            margin-bottom: 20px; /* Khoảng cách giữa các hàng nhập liệu */
+        }
+
+        .form-group {
+            flex: 1; /* Tất cả các mục nhập đều có chiều rộng bằng nhau */
+            margin: 0 10px; /* Khoảng cách giữa các mục nhập */
+        }
+
+        .form-group label {
+            display: block; /* Đặt nhãn trên cùng của trường nhập liệu */
+            margin-bottom: 5px; /* Khoảng cách giữa nhãn và trường nhập liệu */
         }
     </style>
 </head>
@@ -89,13 +108,13 @@
                     <div class="row align-items-center justify-content-between text-left">
                         <div class="col-3">
                             <div class="site-logo">
-                                <a href="index-sidebar-menu.html" class="unslate_co--site-logo">Controller<span></span></a>
+                                <a href="index.html" class="unslate_co--site-logo">HAPPINESS<span></span></a>
                             </div>
                         </div>
                         <div class="col text-right">
                             <ul class="site-nav-ul js-clone-nav text-left d-none d-lg-inline-block">
                                 <li>
-                                    <a href="https://haubg02.github.io/OwlSight/">
+                                    <a href="https://www.facebook.com/groups/168026416684908">
                                         <img src="images/home1.jpg" alt="Image" width="45" style="vertical-align: middle; margin-right: 10px;">
                                         Home
                                     </a>
@@ -108,7 +127,6 @@
                                         Menu
                                     </a>
                                 </li>
-                                
                             </ul>
                         </div>
                     </div>
@@ -120,19 +138,26 @@
                     <div class="row align-items-center">
                         <div class="col-md-7 text-left">
                             <div class="slider-container">
-                                <h1>HCI Calculator</h1>
+                                <h1 style="font-size: 24px;">HAPPENESS CIMLAB INDEX</h1>
                                 <form id="hciForm">
-                                    <label for="cpa">Cumulative GPA (CPA):</label>
-                                    <input type="number" id="cpa" step="0.01" required><br><br>
-
-                                    <label for="height">Height (m):</label>
-                                    <input type="number" id="height" step="0.01" required><br><br>
-
-                                    <label for="weight">Weight (kg):</label>
-                                    <input type="number" id="weight" step="0.01" required><br><br>
-
-                                    <label for="toeic">TOEIC Score:</label>
-                                    <input type="number" id="toeic" step="1" required><br><br>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="cpa">CPA</label>
+                                            <input type="number" id="cpa" step="0.01" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="height">Height (m):</label>
+                                            <input type="number" id="height" step="0.01" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="weight">Weight (kg):</label>
+                                            <input type="number" id="weight" step="0.01" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="toeic">TOEIC Score:</label>
+                                            <input type="number" id="toeic" step="1" required>
+                                        </div>
+                                    </div>
 
                                     <label>
                                         <input type="checkbox" id="competition"> I participated in an innovation contest (Techstart, SangTaoTre...)
@@ -142,9 +167,9 @@
                                 </form>
 
                                 <h2>HCI Result: <span id="result"></span></h2>
-                                <h2><span id="advice"></span></h2>
-
-
+                                <div class="message-box" id="adviceBox">
+                                    <span id="advice"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -183,65 +208,34 @@
                     // Tính HCI với các tham số mới
                     var HCI = (CPA / 3.2) * coefficient + (H / 1.7) * 0.1 + (idealWeight - 5 * deltaW) / idealWeight * 0.1 + e + f;
 
-                    document.getElementById('result').textContent = HCI.toFixed(2);
+                    var roundedHCI = Math.round(HCI * 100) / 100;
+
+                    document.getElementById('result').textContent = roundedHCI.toFixed(2);
 
                     var advice;
-                    if (HCI >= 0.9) {
+                    if (HCI >= 0.90) {
                         advice = "Chúc mừng bạn đã đạt yêu cầu chỉ số phát triển nguồn lực CIMLAB.";
                     } else {
                         advice = "Chúc bạn may mắn lần sau.";
                     }
 
+                    // Hiển thị thông báo
+                    var adviceBox = document.getElementById('adviceBox');
                     document.getElementById('advice').textContent = advice;
+                    adviceBox.style.display = 'block';
                 }
             </script>
 
-            <a href="#portfolio-section" class="mouse-wrap smoothscroll">
-                <span class="mouse">
-                    <span class="scroll"></span>
-                </span>
-                <span class="mouse-label">Scroll</span>
-            </a>
-        </div>
-
-        <footer class="unslate_co--footer unslate_co--section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-7">
-                        <div class="footer-site-logo"><a href="index.html">OwlSight<span></span></a></div>
-                        <ul class="footer-site-social">
-                            <li><a href="https://www.facebook.com/vansinh.tong.560">Facebook</a></li>
-                            <li><a href="https://x.com/">Twitter</a></li>
-                            <li><a href="https://www.instagram.com/hauc02/">Instagram</a></li>
-                            <li><a href="https://dribbble.com/">Dribbble</a></li>
-                            <li><a href="https://www.behance.net/">Behance</a></li>
-                        </ul>
-                        <p class="site-copyright">
-                            Copyright &copy;
-                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://www.facebook.com/vansinh.tong.560" target="_blank">OwlSight</a>
-                        </p>
+            <footer class="site-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <p>© 2024 HAPPINESS. All Rights Reserved.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
+        </div>
     </div>
-
-    <!-- Loader -->
-    <div id="unslate_co--overlayer"></div>
-    <div class="site-loader-wrap">
-        <div class="site-loader dark"></div>
-    </div>
-
-    <script src="js/scripts-dist.js" defer></script>
-    <script src="js/main.js" defer></script>
-
-    <!-- Global site tag (gtag) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-157808202-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-157808202-1');
-    </script>
 </body>
 </html>
